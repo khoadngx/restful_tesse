@@ -1,0 +1,22 @@
+body{
+    background-color: #DDDDDD;
+}
+.dropdown:hover>.dropdown-menu {
+    display: block;
+}
+.avatar-wrap{
+    overflow: hidden !important;
+    position: relative !important;
+}
+.avatar-wrap img{
+    object-fit: cover;
+    position: absolute !important;
+    width: 100px;
+    height: 100px;
+}
+.content-wrap{
+    font-size: 12px;
+}
+.btn-action{
+    margin: 0%;
+}

@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Search experts{% endblock %}
+{% block css %}
+  <link href="{% static 'css/search.css' %}" rel="stylesheet"/>
+{% endblock %}
+
+{% block content %}
+
+  <h6 class="mt-sm-4" style="color:slategray;">Search result</h6>
+  <hr>
+  <div class="row">
+    
+  {% for expinfo in expdata %}
+    <div class="col-sm-6 my-sm-2">
+      <div class="card border border-primary">
+        <div class="card-body">
+          <div class="item-wrap row">
+            <div class="avatar-wrap col-3">
+              <img src="{% static 'imgs/violetwl.jpg' %}" alt="avatar" class="img img-responsive full-width rounded-circle"/>
+            </div>
+            <div class="content-wrap col-9">
+              <div class="item-dtl row">
+                <div class="dtl-left col-6">
+                  <div class="name-wrap">
+                    <a class="name" href="#" style="font-size:15px;"> {{ expinfo.name }} </a>
+                  </div>
+                  <div class="job-wrap mt-sm-2">
+                    <span> {{ expinfo.company.name }} </span>
+                  </div>
+                  <div class="location-wrap">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="location"> {{ expinfo.address.city }} </a>
+                  </div>
+                </div>
+                <div class="dtl-right col-6">
+                  <div class="float-right">
+                    <div class="rate-wrap">
+                      <span style="width:100%;">
+                          <i class="fas fa-circle" style="color:springgreen;"></i>
+                          Online
+                          {% comment %} <i class="fas fa-circle" style="color:slategrey;"></i>
+                          Offline {% endcomment %}
+                      </span>
+                    </div>
+                    <div class="rate-wrap star">
+                      <i class="fas fa-star" style="color:yellow;"></i>
+                      <i class="fas fa-star" style="color:yellow;"></i>
+                      <i class="fas fa-star" style="color:yellow;"></i>
+                      <i class="fas fa-star" style="color:yellow;"></i>
+                      <i class="fas fa-star" style="color:yellow;"></i>
+                      <p>{{ expinfo.address.geo.lat }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="skills mt-sm-3 float-right">
+                <span class="badge badge-secondary">{{ expinfo.website }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="item-action mt-sm-2 row">
+            <div class="appointment-btn-wrap col-4 px-sm-1">
+              <button class="btn btn-info btn-block" type="button" data-toggle="modal" data-target="#appointmentModal{{expinfo.id}}"><i class="far fa-calendar-alt" style="font-size:29px;"></i></button>
+            </div>
+            <div class="map-btn-wrap col-4 px-sm-1">
+              <button class="btn btn-info btn-block" type="button" data-toggle="modal" data-target="#mapModal{{expinfo.id}}"><i class="far fa-compass" style="font-size:29px;"></i></button>
+            </div>
+            <div class="call-btn-wrap col-2 px-sm-1">
+              <button class="btn btn-info btn-block" type="button" data-toggle="modal" data-target="#callModal{{expinfo.id}}"><i class="fas fa-phone-volume" style="font-size:29px;"></i></button>
+            </div>
+            <div class="message-btn-wrap col-2 px-sm-1">
+              <button class="btn btn-info btn-block" type="button" data-toggle="modal" data-target="#messageModal{{expinfo.id}}"><i class="far fa-envelope" style="font-size:29px;"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Appointment Modal -->
+    <div class="modal fade mt-md-5" id="appointmentModal{{expinfo.id}}" tabindex="-1" role="dialog" aria-labelledby="appointmentModalLabel{{expinfo.id}}" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="appointmentModalLabel{{expinfo.id}}">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary btn-block">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Map Modal -->
+    <div class="modal fade mt-md-5" id="mapModal{{expinfo.id}}" tabindex="-1" role="dialog" aria-labelledby="mapModalLabel{{expinfo.id}}" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="mapModalLabel{{expinfo.id}}">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">     
+            <div id="mapmaker{{ expinfo.id }}" style="width:100%;height:450px;"></div>
+            <div class="sr-only" id="expgeolat{{ expinfo.id }}">-25.363</div>
+            <div class="sr-only" id="expgeolng{{ expinfo.id }}">131.044</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Call Modal -->
+    <div class="modal fade mt-md-5" id="callModal{{expinfo.id}}" tabindex="-1" role="dialog" aria-labelledby="callModalLabel{{expinfo.id}}" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="callModalLabel{{expinfo.id}}">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary btn-block">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Message Modal -->
+    <div class="modal fade mt-md-5" id="messageModal{{expinfo.id}}" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel{{expinfo.id}}" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="messageModalLabel{{expinfo.id}}">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary btn-block">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  {% endfor %}
+  </div>
+
+{% endblock %}
+{% comment %} AIzaSyAYHEX1y6T4MaDUeTWrjXJ8a8-XIguVt_A {% endcomment %}
+{% block customjs %}
+  <script>
+    function initMap(x) {
+      //for(var i = 1; i <= parseInt('{{ expnum }}');i++){
+        var explat = parseInt(document.getElementById('expgeolat' + i).value);
+        var explng = parseInt(document.getElementById('expgeolng' + i).value);
+        var uluru = {lat: explat , lng: explng };
+        var map = new google.maps.Map(document.getElementById('mapmaker' + i ), {
+          zoom: 4,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+      //}
+    }
+  </script>
+  <script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYHEX1y6T4MaDUeTWrjXJ8a8-XIguVt_A&callback=initMap(1)">
+  </script>
+{% endblock  %}

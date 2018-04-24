@@ -1,0 +1,91 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>{% block title %}Django Project{% endblock %}</title>
+    
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Fontawesome CSS -->
+    <link href="{% static 'vendor/fontawesome/css/fontawesome-all.min.css' %}" rel="stylesheet">
+
+    <!-- jQuery CSS -->
+    <link href="{% static 'vendor/jquery/jquery-ui.min.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    {% block css %}<link href="{% static 'css/base.css' %}" rel="stylesheet"/>{% endblock %}
+    
+  </head>
+
+  <body id="page-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-between">
+      <a class="navbar-brand" href="http://127.0.0.1:8000" style="color:yellow;">
+        <img src="{% static 'imgs/logo.png' %}" style="width:90%;height:40px;"/>
+      </a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+            <div class="nav-link dropdown-toggle" id="navbarCategoriesDropdownLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Categories
+            </div>
+            <div class="dropdown-menu" aria-labelledby="navbarCategoriesDropdownLink">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <div class="input-group" style="width:750px;">
+              <input type="search" class="form-control" placeholder="What are you looking for?" aria-label="Search" aria-describedby="search-input">
+              <div class="input-group-append">
+                <a class="btn btn-warning" href="http://127.0.0.1:8000/search" aria-pressed="true"><i class="fas fa-search"></i></a>
+              </div>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-warning ml-sm-2" href="http://127.0.0.1:8000/become-an-expert" aria-pressed="true">Become an expert</a>
+          </li>
+        </ul>
+      </div>
+      <div class="navbar-nav ml-auto btn-group">
+          <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            User
+          </button>
+          <div class="dropdown-menu dropdown-menu-right">
+            <button class="dropdown-item" type="button">My profile</button>
+            <button class="dropdown-item" type="button">Become expert</button>
+            <button class="dropdown-item" type="button">Manage appoinment</button>
+            <button class="dropdown-item" type="button">Setting account</button>
+            <button class="dropdown-item" type="button">Log out</button>
+          </div>
+        </div>
+    </nav>
+
+    <div class="container">
+      {% block content %}
+      {% endblock %}
+    </div>
+    
+    <!-- jQuery -->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/jquery/external/jquery/jquery.js' %}"></script>
+    <script src="{% static 'vendor/jquery/jquery-ui.min.js' %}"></script>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+
+    <!-- Custom JavaScript for this theme -->
+    {% block customjs %}{% endblock  %}
+
+
+  </body>
+</html>
