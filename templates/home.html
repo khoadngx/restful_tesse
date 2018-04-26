@@ -46,17 +46,17 @@
         </ul>
       </div>
 
-      <div class="nav-item">
+      <div class="nav-item" id="loginbtn">
         <button class="btn btn-outline-warning ml-sm-2" data-toggle="modal" data-target="#loginModal">LOGIN</button>
       </div>
-      <div class="nav-item">
+      <div class="nav-item" id="signupbtn">
         <button class="btn btn-outline-warning ml-sm-2" data-toggle="modal" data-target="#signupModal">SIGN UP</button>  
       </div>
       <div class="nav-item">
         <button class="btn btn-warning mx-sm-2" type="submit">Become An Expert</button>
       </div>
       <div class="navbar-nav ml-auto btn-group">
-        <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="username">
           User
         </button>
         <div class="dropdown-menu dropdown-menu-right">
@@ -112,6 +112,7 @@
                 <input type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="password-input" id="login_pwd" required>
               </div>
             </form>
+            <span id="loginalert" style="color:red;font-size:12px;"></span>
           </div>
           <div class="modal-footer">
             <button type="submit" class="btn btn-block btn-lg btn-warning" id="login_btn">Log in with Tesse</button>
@@ -151,7 +152,7 @@
                     <i class="fas fa-envelope"></i>
                   </span>
                 </div>
-                <input type="email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="email-input" name="email">
+                <input type="email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="email-input" name="email" id="signup_email" required>
               </div>
               <div class="form-group input-group input-group-lg">
                 <div class="input-group-prepend">
@@ -159,12 +160,13 @@
                     <i class="fas fa-key"></i>
                   </span>
                 </div>
-                <input type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="password-input">
+                <input type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="password-input" required>
               </div>
             </form>
+            <span id="signupalert" style="color:red;font-size:12px;"></span>
           </div>
           <div class="modal-footer">
-            <button type="submit" class="btn btn-block btn-lg btn-warning">Submit</button>
+            <button type="submit" class="btn btn-block btn-lg btn-warning" id="signup_btn">Submit</button>
           </div>
         </div>
       </div>
@@ -176,6 +178,7 @@
   <script src="{% static 'vendor/jquery/jquery-ui.min.js' %}"></script>
 
   <!-- Bootstrap core JavaScript -->
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js'%}"></script>
   <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
 
   <!-- Custom JavaScript for this theme -->

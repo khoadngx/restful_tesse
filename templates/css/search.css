@@ -17,6 +17,6 @@ body{
 .content-wrap{
     font-size: 12px;
 }
-.btn-action{
-    margin: 0%;
+.actionbtn{
+    background-color: #D3D3D3;
 }

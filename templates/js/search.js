@@ -1,0 +1,3 @@
+$(function() {
+    $('#appointmentdatetime').datepicker();
+});
