@@ -3,10 +3,7 @@ from django.http import JsonResponse
 import requests
 
 def home(request):
-    status = "nothing"
-    if request.session.test_cookie_worked():
-        status = "The test cookie worked!!!"
-        request.session.delete_test_cookie()
+    status = 'nothing'
     return render(request, 'home.html', { 'status': status })
 
 def search(request):
