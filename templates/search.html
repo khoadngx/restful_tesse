@@ -18,31 +18,36 @@
         <div class="card-body">
           <div class="item-wrap row">
             <div class="avatar-wrap col-3">
-              <img src="{% static 'imgs/violetwl.jpg' %}" alt="avatar" class="img img-responsive full-width rounded-circle"/>
+              <img src="{{ expinfo.image }}" alt="avatar" class="img img-responsive full-width rounded-circle"/>
             </div>
             <div class="content-wrap col-9">
               <div class="item-dtl row">
                 <div class="dtl-left col-6">
                   <div class="name-wrap">
-                    <a class="name" href="#" style="font-size:15px;"> {{ expinfo.name }} </a>
+                    <a class="name" href="#" style="font-size:15px;"> {{ expinfo.FName }} {{ expinfo.LName }} </a>
                   </div>
                   <div class="job-wrap mt-sm-2">
-                    <span> {{ expinfo.company.name }} </span>
+                    <span> {{ expinfo.career }} </span>
                   </div>
                   <div class="location-wrap">
                     <i class="fas fa-map-marker-alt"></i>
-                    <span class="location"> {{ expinfo.address.city }} </a>
+                    <span class="location"> {{ expinfo.country }} </a>
                   </div>
                 </div>
                 <div class="dtl-right col-6">
                   <div class="float-right">
                     <div class="rate-wrap">
-                      <span style="width:100%;">
+                      {% ifequal exinfo.isOnline '1' %}
+                        <span style="width:100%;">
                           <i class="fas fa-circle" style="color:springgreen;"></i>
-                          Online
-                          {% comment %} <i class="fas fa-circle" style="color:slategrey;"></i>
-                          Offline {% endcomment %}
-                      </span>
+                            Online
+                        </span>
+                      {% else %}
+                        <span style="width:100%;">
+                          <i class="fas fa-circle" style="color:slategrey;"></i>
+                            Offline
+                        </span>
+                      {% endifequal %}
                     </div>
                     <div class="rate-wrap star">
                       <i class="fas fa-star" style="color:yellow;"></i>
@@ -55,22 +60,26 @@
                 </div>
               </div>
               <div class="skills mt-sm-4 float-right">
-                <span class="btn badge" style="background-color:#EEEEEE;">{{ expinfo.website }}</span>
+                {% for exp in expskill %}
+                  {% for skill in exp %}
+                    <span class="btn badge" style="background-color:#EEEEEE;">{{ skill.name }}</span>
+                  {% endfor %}
+                {% endfor %}
               </div>
             </div>
           </div>
           <div class="item-action mt-sm-2 row">
             <div class="appointment-btn-wrap col-4 px-sm-1">
-              <button class="btn btn-block actionbtn" type="button" data-toggle="modal" data-target="#appointmentModal{{expinfo.id}}"><i class="far fa-calendar-alt" style="font-size:29px;"></i></button>
+              <button class="btn btn-block actionbtn" type="button" data-toggle="modal" data-target="#appointmentModal{{expinfo.IdExpert}}"><i class="far fa-calendar-alt" style="font-size:29px;"></i></button>
             </div>
             <div class="map-btn-wrap col-4 px-sm-1">
-              <button class="btn btn-block actionbtn" type="button" data-toggle="modal" data-target="#mapModal{{expinfo.id}}"><i class="far fa-compass" style="font-size:29px;"></i></button>
+              <button class="btn btn-block actionbtn" type="button" data-toggle="modal" data-target="#mapModal{{expinfo.IdExpert}}"><i class="far fa-compass" style="font-size:29px;"></i></button>
             </div>
             <div class="call-btn-wrap col-2 px-sm-1">
-              <button class="btn btn-block actionbtn" type="button" data-toggle="modal" data-target="#callModal{{expinfo.id}}"><i class="fas fa-phone-volume" style="font-size:29px;"></i></button>
+              <button class="btn btn-block actionbtn" type="button" data-toggle="modal" data-target="#callModal{{expinfo.IdExpert}}"><i class="fas fa-phone-volume" style="font-size:29px;"></i></button>
             </div>
             <div class="message-btn-wrap col-2 px-sm-1">
-              <button class="btn btn-block actionbtn" type="button" data-toggle="modal" data-target="#messageModal{{expinfo.id}}"><i class="far fa-envelope" style="font-size:29px;"></i></button>
+              <button class="btn btn-block actionbtn" type="button" data-toggle="modal" data-target="#messageModal{{expinfo.IdExpert}}"><i class="far fa-envelope" style="font-size:29px;"></i></button>
             </div>
           </div>
         </div>
@@ -78,11 +87,11 @@
     </div>
 
     <!-- Appointment Modal -->
-    <div class="modal fade mt-md-5" id="appointmentModal{{expinfo.id}}" tabindex="-1" role="dialog" aria-labelledby="appointmentModalLabel{{expinfo.id}}" aria-hidden="true">
+    <div class="modal fade mt-md-5" id="appointmentModal{{expinfo.IdExpert}}" tabindex="-1" role="dialog" aria-labelledby="appointmentModalLabel{{expinfo.IdExpert}}" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="appointmentModalLabel{{expinfo.id}}">Make an appointment</h5>
+            <h5 class="modal-title" id="appointmentModalLabel{{expinfo.IdExpert}}">Make an appointment</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -110,59 +119,61 @@
     </div>
 
     <!-- Map Modal -->
-    <div class="modal fade mt-md-5" id="mapModal{{expinfo.id}}" tabindex="-1" role="dialog" aria-labelledby="mapModalLabel{{expinfo.id}}" aria-hidden="true">
+    <div class="modal fade mt-md-5" id="mapModal{{expinfo.IdExpert}}" tabindex="-1" role="dialog" aria-labelledby="mapModalLabel{{expinfo.IdExpert}}" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="mapModalLabel{{expinfo.id}}">Location</h5>
+            <h5 class="modal-title" id="mapModalLabel{{expinfo.IdExpert}}">Location</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">     
-            <div id="map{{ expinfo.id }}" style="width:100%;height:450px;"></div>
-            <input type="number" class="sr-only" id="expgeolat{{ expinfo.id }}" value="{{ expinfo.address.geo.lat }}"/>
-            <input type="number" class="sr-only" id="expgeolng{{ expinfo.id }}" value="{{ expinfo.address.geo.lng }}"/>
+            <div id="map{{ expinfo.IdExpert }}" style="width:100%;height:450px;"></div>
+            <input type="number" class="sr-only" id="expgeolat{{ expinfo.IdExpert }}" value="{{ expinfo.lat }}"/>
+            <input type="number" class="sr-only" id="expgeolng{{ expinfo.IdExpert }}" value="{{ expinfo.lon }}"/>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Call Modal -->
-    <div class="modal fade mt-md-5" id="callModal{{expinfo.id}}" tabindex="-1" role="dialog" aria-labelledby="callModalLabel{{expinfo.id}}" aria-hidden="true">
+    <div class="modal fade mt-md-5" id="callModal{{expinfo.IdExpert}}" tabindex="-1" role="dialog" aria-labelledby="callModalLabel{{expinfo.IdExpert}}" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="callModalLabel{{expinfo.id}}">Modal title</h5>
+            <h5 class="modal-title" id="callModalLabel{{expinfo.IdExpert}}">Make a call</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            ...
+            <i class="fas fa-phone-volume"></i>
+            {{ expinfo.sdt }}
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary btn-block">Save changes</button>
+            <button type="button" class="btn btn-warning btn-block">Save changes</button>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Message Modal -->
-    <div class="modal fade mt-md-5" id="messageModal{{expinfo.id}}" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel{{expinfo.id}}" aria-hidden="true">
+    <div class="modal fade mt-md-5" id="messageModal{{expinfo.IdExpert}}" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel{{expinfo.IdExpert}}" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="messageModalLabel{{expinfo.id}}">Modal title</h5>
+            <h5 class="modal-title" id="messageModalLabel{{expinfo.IdExpert}}">Send a message</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            ...
+            <i class="far fa-comment-alt"></i>
+            {{ expinfo.sdt }}
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary btn-block">Save changes</button>
+            <button type="button" class="btn btn-warning btn-block">Save changes</button>
           </div>
         </div>
       </div>
@@ -176,11 +187,13 @@
 {% block customjs %}
   <script>
     function initMap() {
-      for(var i = 1; i <= parseInt('{{ expnum }}');i++){
-        var explat = parseFloat(document.getElementById('expgeolat' + i).value);
-        var explng = parseFloat(document.getElementById('expgeolng' + i).value);
+      var jsdata = {{ jsdata | safe }};
+      for(var i = 0; i < parseInt('{{ expnum }}');i++){
+        var id = jsdata[i];
+        var explat = parseFloat(document.getElementById('expgeolat' + id).value);
+        var explng = parseFloat(document.getElementById('expgeolng' + id).value);
         var uluru = {lat: explat , lng: explng };
-        var map = new google.maps.Map(document.getElementById('map' + i ), {
+        var map = new google.maps.Map(document.getElementById('map' + id), {
           zoom: 5,
           center: uluru
         });

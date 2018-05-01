@@ -7,9 +7,21 @@ def home(request):
     return render(request, 'home.html', { 'status': status })
 
 def search(request):
-    response = requests.get('https://jsonplaceholder.typicode.com/users')
+    response = requests.get('http://192.168.43.242:3000/tesse/expert')
     expdata = response.json()
-    return render(request, 'search.html', { 'expdata': expdata, 'expnum': len(expdata) })
+    jsdata = []
+    expskill = []
+    for i in range(len(expdata)):
+        jsdata.append(expdata[i]['IdExpert'])
+    for i in range(len(jsdata)):
+        res = requests.get('http://192.168.43.242:3000/tesse/expert_skill/' + jsdata[i])
+        expskill.append(res.json())
+    return render(request, 'search.html', { 
+        'expdata': expdata, 
+        'expnum': len(expdata), 
+        'jsdata': jsdata,
+        'expskill': expskill,
+        })
 
 def becomeAnExpert(request):
     response = requests.get('https://jsonplaceholder.typicode.com/users')
@@ -37,10 +49,10 @@ def validate_email(request):
         'is_taken': ''
     }
     email = request.GET.get('email', None)
-    response = requests.get('https://jsonplaceholder.typicode.com/users')
+    response = requests.get('http://192.168.43.242:3000/tesse/users/all')
     jsondata = response.json()
     for i in range(len(jsondata)):
-        if str(jsondata[i]['email']) == str(email):
+        if str(jsondata[i]['IdUser']) == str(email):
             data['is_taken'] = 1
             break
     return JsonResponse(data)

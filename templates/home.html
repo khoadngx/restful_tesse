@@ -9,7 +9,8 @@
     <meta name="author" content="">
 
     <title>Tesse - Connecting knowledge</title>
-    
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'imgs/favicon.ico' %}" />
+
     <!-- Bootstrap core CSS -->
     <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 
@@ -53,7 +54,7 @@
         <button class="btn btn-outline-warning ml-sm-2" data-toggle="modal" data-target="#signupModal">SIGN UP</button>  
       </div>
       <div class="nav-item">
-        <button class="btn btn-warning mx-sm-2" type="submit">Become An Expert</button>
+        <a class="btn btn-warning mx-sm-2" href="http://127.0.0.1:8000/become-an-expert" aria-pressed="true">Become An Expert</a>
       </div>
       <div class="navbar-nav ml-auto btn-group">
         <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="username">
@@ -132,37 +133,53 @@
             </button>
           </div>
           <div class="modal-body">
-            <form method="POST">
               <div class="row">
-                <div class="form-group input-group input-group-lg col-6">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                        <i class="fas fa-user"></i>
-                    </span>
-                  </div>
-                  <input type="text" class="form-control" placeholder="First name" aria-label="firstname" aria-describedby="firstname">
+                <div class="col-3">
+                  <img src="{% static 'imgs/violetwl.jpg' %}" alt="avatar" class="img img-responsive full-width rounded-circle mb-2" id="avaSelect"/>
+                  <select class="form-control" id="avasl" placeholder="Avatar">
+                      <option value="http://cdni.condenast.co.uk/320x480/d_f/Emma-Watson-close-up-Vogue-28Aug15-Getty_b_320x480.jpg">Emma Watson</option>
+                      <option value="https://genknews.genkcdn.vn/k:thumb_w/640/2015/a-1436946541628/truyen-tranh-naruto-gaara-sasuke-hai-cuoc-doi-mot-noi-dau.png">Sasuke</option>
+                      <option value="https://pbs.twimg.com/media/DX1Rd1xUMAABmVm.jpg">Naruto</option>
+                      <option value="https://celebjury.com/wp-content/uploads/2017/10/cristiano-ronaldo-net-worth.jpg">Ronaldo</option>
+                      <option value="https://cdn1.thr.com/sites/default/files/2017/03/chris_evans_captain_america_uk_getty_h_2016.jpg">Cap'n America</option>
+                      <option value="http://www.elle.vn/wp-content/uploads/2015/10/30/emma-stone.jpg">Emma Stone</option>
+                  </select>
                 </div>
-                <div class="form-group input-group input-group-lg col-6">
-                    <input type="text" class="form-control" placeholder="Last name" aria-label="lastname" aria-describedby="lastname">
+                <div class="col-9">
+                  <form method="POST">
+                    <div class="row">
+                      <div class="form-group input-group input-group-lg px-0 col-6">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                              <i class="fas fa-user"></i>
+                          </span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="First name" aria-label="firstname" aria-describedby="firstname" id="signup_fn">
+                      </div>
+                      <div class="form-group input-group input-group-lg col-6">
+                          <input type="text" class="form-control" placeholder="Last name" aria-label="lastname" aria-describedby="lastname" id="signup_ln">
+                      </div>
+                      <div class="form-group input-group input-group-lg pr-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="fas fa-envelope"></i>
+                          </span>
+                        </div>
+                        <input type="email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="email-input" name="email" id="signup_email" required>
+                      </div>
+                      <div class="form-group input-group input-group-lg pr-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="fas fa-key"></i>
+                          </span>
+                        </div>
+                        <input type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="password-input" id="signup_pwd" required>
+                      </div>
+                    </div>
+                  </form>
                 </div>
               </div>
-              <div class="form-group input-group input-group-lg">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">
-                    <i class="fas fa-envelope"></i>
-                  </span>
-                </div>
-                <input type="email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="email-input" name="email" id="signup_email" required>
-              </div>
-              <div class="form-group input-group input-group-lg">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">
-                    <i class="fas fa-key"></i>
-                  </span>
-                </div>
-                <input type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="password-input" required>
-              </div>
-            </form>
+              
             <span id="signupalert" style="color:red;font-size:12px;"></span>
           </div>
           <div class="modal-footer">

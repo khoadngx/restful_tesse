@@ -3,3 +3,9 @@ body {
   background-image: url("../imgs/header-bg.jpg");
   background-size: cover;
 }
+
+#avaSelect{
+  object-fit: cover;
+  width: 90px;
+  height: 90px;
+}

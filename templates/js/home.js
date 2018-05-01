@@ -22,6 +22,11 @@ $('#login_btn').click(function() {
 
 });
 
+$('#avasl').change(function avaSelection(){
+  var avasl = this.value;
+  $('#avaSelect').attr("src", avasl);
+});
+
 $('#signup_email').change(function() {
   var email = this.value;
 
@@ -42,6 +47,35 @@ $('#signup_email').change(function() {
         $('#signupalert').html("Available email address!");
         $('#signup_btn').removeClass("disabled");
       }
+    }
+  });
+
+});
+
+$('#signup_btn').click(function(){
+  var email = $('#signup_email').val().trim();
+  var fn = $('#signup_fn').val().trim();
+  var ln = $('#signup_ln').val().trim();
+  var pwd = $('#signup_pwd').val().trim();
+  var avatar = $('#avasl').val().trim();
+  $.ajax({
+    type: "POST",
+    url: 'http://192.168.43.242:3000/tesse/users',
+    data:{
+      'Access-Control-Allow-Credentials': true, 
+      'IdUser': email,
+      'Password': pwd,      
+      'FName': fn,
+      'LName': ln,
+      'avatar': avatar,
+      'isExpert': 0,
+    },
+    dataType: 'json',
+    success: function (data){
+      alert(data);
+    },
+    error: function (xhr, status) {
+      alert("error");
     }
   });
 
