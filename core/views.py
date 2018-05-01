@@ -3,10 +3,15 @@ from django.http import JsonResponse
 import requests
 
 def home(request):
-    status = 'nothing'
-    return render(request, 'home.html', { 'status': status })
+    usersession = 'nothing'
+    if request.session.get('user'):
+        usersession = request.session.get('user')
+    return render(request, 'home.html', { 'usersession': usersession })
 
 def search(request):
+    usersession = 'nothing'
+    if request.session.get('user'):
+        usersession = request.session.get('user')
     response = requests.get('http://192.168.43.242:3000/tesse/expert')
     expdata = response.json()
     jsdata = []
@@ -21,6 +26,7 @@ def search(request):
         'expnum': len(expdata), 
         'jsdata': jsdata,
         'expskill': expskill,
+        'usersession': usersession,
         })
 
 def becomeAnExpert(request):
@@ -31,16 +37,17 @@ def becomeAnExpert(request):
 def validate_login(request):
     data = {
         'is_correct': '',
-        'username': ''
+        'session': '',
     }
     email = request.GET.get('email', None)
     pwd = request.GET.get('pwd', None)
-    response = requests.get('https://jsonplaceholder.typicode.com/users')
+    response = requests.get('http://192.168.43.242:3000/tesse/users/all')
     jsondata = response.json()
     for i in range(len(jsondata)):
-        if str(jsondata[i]['email']) == str(email) and str(jsondata[i]['id']) == str(pwd) :
+        if str(jsondata[i]['IdUser']) == str(email) and str(jsondata[i]['Password']) == str(pwd) :
             data['is_correct'] = 1
-            data['username'] = jsondata[i]['name']
+            request.session['user'] = jsondata[i]['FName']
+            data['session'] = request.session['user']
             break
     return JsonResponse(data)
 
@@ -55,4 +62,14 @@ def validate_email(request):
         if str(jsondata[i]['IdUser']) == str(email):
             data['is_taken'] = 1
             break
+    return JsonResponse(data)
+
+def logout(request):
+    data = {
+        'is_success': ''
+    }
+    check = request.GET.get('check', None)
+    if(check):
+        del request.session['user']
+        data['is_success'] = 1
     return JsonResponse(data)

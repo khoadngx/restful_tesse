@@ -46,26 +46,31 @@
           </li>
         </ul>
       </div>
-
-      <div class="nav-item" id="loginbtn">
-        <button class="btn btn-outline-warning ml-sm-2" data-toggle="modal" data-target="#loginModal">LOGIN</button>
-      </div>
-      <div class="nav-item" id="signupbtn">
-        <button class="btn btn-outline-warning ml-sm-2" data-toggle="modal" data-target="#signupModal">SIGN UP</button>  
-      </div>
+      {% ifequal usersession 'nothing' %}
+        <div class="nav-item" id="loginbtn">
+          <button class="btn btn-outline-warning ml-sm-2" data-toggle="modal" data-target="#loginModal">LOGIN</button>
+        </div>
+        <div class="nav-item" id="signupbtn">
+          <button class="btn btn-outline-warning ml-sm-2" data-toggle="modal" data-target="#signupModal">SIGN UP</button>  
+        </div>
+      {% endifequal %}
       <div class="nav-item">
         <a class="btn btn-warning mx-sm-2" href="http://127.0.0.1:8000/become-an-expert" aria-pressed="true">Become An Expert</a>
       </div>
-      <div class="navbar-nav ml-auto btn-group">
-        <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="username">
-          {{ status }}
-        </button>
-        <div class="dropdown-menu dropdown-menu-right">
-          <button class="dropdown-item" type="button">Action</button>
-          <button class="dropdown-item" type="button">Another action</button>
-          <button class="dropdown-item" type="button">Something else here</button>
+      {% ifnotequal usersession 'nothing' %}
+        <div class="navbar-nav ml-auto btn-group">
+          <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="username">
+            {{ usersession }}
+          </button>
+          <div class="dropdown-menu dropdown-menu-right">
+            <button class="dropdown-item" type="submit">My profile</button>
+            <button class="dropdown-item" type="submit">Become expert</button>
+            <button class="dropdown-item" type="submit">Manage appoinment</button>
+            <button class="dropdown-item" type="submit">Setting account</button>
+            <button class="dropdown-item" type="submit" id="logout_btn">Log out</button>
+          </div>
         </div>
-      </div>
+      {% endifnotequal %}
     </nav>
 
     <div class="container full-height relative">
