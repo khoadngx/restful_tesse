@@ -3,14 +3,29 @@ from django.http import JsonResponse
 import requests
 
 def home(request):
-    usersession = 'nothing'
-    if request.session.get('user'):
+    usrid = ''
+    usersession = ''
+    currentusr = {}
+    if request.session.get('usrid'):
+        usrid = request.session.get('usrid')
         usersession = request.session.get('user')
-    return render(request, 'home.html', { 'usersession': usersession })
+    response = requests.get('http://192.168.43.242:3000/tesse/users/all')
+    usrdata = response.json()
+    for i in range(len(usrdata)):
+        if str(usrdata[i]['IdUser']) == str(usrid):
+            currentusr = usrdata[i]
+    return render(request, 'home.html', { 
+        'usersession': usersession, 
+        'usrid': usrid,
+        'currentusr': currentusr,
+        })
 
 def search(request):
-    usersession = 'nothing'
-    if request.session.get('user'):
+    usrid = ''
+    usersession = ''
+    currentusr = {}
+    if request.session.get('usrid'):
+        usrid = request.session.get('usrid')
         usersession = request.session.get('user')
     response = requests.get('http://192.168.43.242:3000/tesse/expert')
     expdata = response.json()
@@ -21,34 +36,73 @@ def search(request):
     for i in range(len(jsdata)):
         res = requests.get('http://192.168.43.242:3000/tesse/expert_skill/' + jsdata[i])
         expskill.append(res.json())
+    response = requests.get('http://192.168.43.242:3000/tesse/users/all')
+    usrdata = response.json()
+    for i in range(len(usrdata)):
+        if str(usrdata[i]['IdUser']) == str(usrid):
+            currentusr = usrdata[i]
     return render(request, 'search.html', { 
         'expdata': expdata, 
         'expnum': len(expdata), 
         'jsdata': jsdata,
         'expskill': expskill,
         'usersession': usersession,
+        'usrid': usrid,
+        'currentusr': currentusr,
         })
 
 def becomeAnExpert(request):
-    response = requests.get('https://jsonplaceholder.typicode.com/users')
-    expdata = response.json()
-    return render(request, 'becomeanexpert.html', { 'expdata': expdata })
+    usrid = ''
+    usersession = ''
+    currentusr = {}
+    if request.session.get('usrid'):
+        usrid = request.session.get('usrid')
+        usersession = request.session.get('user')
+    response = requests.get('http://192.168.43.242:3000/tesse/users/all')
+    usrdata = response.json()
+    for i in range(len(usrdata)):
+        if str(usrdata[i]['IdUser']) == str(usrid):
+            currentusr = usrdata[i]
+    response = requests.get('http://192.168.43.242:3000/tesse/career')
+    career = response.json()
+    return render(request, 'becomeanexpert.html', { 
+        'usersession': usersession, 
+        'usrid': usrid,
+        'currentusr': currentusr,
+        'career': career
+        })
+
+def manageAppointment(request):
+    usrid = ''
+    usersession = ''
+    currentusr = {}
+    if request.session.get('usrid'):
+        usrid = request.session.get('usrid')
+        usersession = request.session.get('user')
+    response = requests.get('http://192.168.43.242:3000/tesse/users/all')
+    usrdata = response.json()
+    for i in range(len(usrdata)):
+        if str(usrdata[i]['IdUser']) == str(usrid):
+            currentusr = usrdata[i]
+    response = requests.get('http://192.168.43.242:3000/tesse/appointmentexpert/' + usrid)
+    appointmentusrdata = response.json()
+    return render(request, 'manageappointment.html', { 
+        'usersession': usersession, 
+        'usrid': usrid,
+        'currentusr': currentusr,
+        'appointmentusrdata': appointmentusrdata,
+        })
 
 def validate_login(request):
     data = {
-        'is_correct': '',
-        'session': '',
+        'is_success': '',
     }
-    email = request.GET.get('email', None)
-    pwd = request.GET.get('pwd', None)
-    response = requests.get('http://192.168.43.242:3000/tesse/users/all')
-    jsondata = response.json()
-    for i in range(len(jsondata)):
-        if str(jsondata[i]['IdUser']) == str(email) and str(jsondata[i]['Password']) == str(pwd) :
-            data['is_correct'] = 1
-            request.session['user'] = jsondata[i]['FName']
-            data['session'] = request.session['user']
-            break
+    usrss = request.GET.get('usrss', None)
+    usrid = request.GET.get('usrid', None)
+    if usrid:
+        request.session['user'] = str(usrss)
+        request.session['usrid'] = str(usrid)
+        data['is_success'] = 1
     return JsonResponse(data)
 
 def validate_email(request):
@@ -71,5 +125,6 @@ def logout(request):
     check = request.GET.get('check', None)
     if(check):
         del request.session['user']
+        del request.session['usrid']
         data['is_success'] = 1
     return JsonResponse(data)

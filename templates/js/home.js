@@ -1,19 +1,37 @@
 $('#login_btn').click(function() {
-  var email = $('#login_email')[0].value;
-  var pwd = $('#login_pwd')[0].value;
+  var email = $('#login_email').val().trim();
+  var pwd = $('#login_pwd').val().trim();
 
   $.ajax({
     type: "GET",
-    url: '/validate_login',
+    url: 'http://192.168.43.242:3000/tesse/users',
     data:{
-      'email': email,
-      'pwd': pwd,
+      'Access-Control-Allow-Credentials': true,
+      'id': email,
+      'pass': pwd,
     },
     dataType: 'json',
     success: function (data){
-      if(data.is_correct){
-        $('#loginalert').html(data.session);
-        location.reload(true);
+      if(data != ""){
+        var usrss = data[0].FName;
+        var usrid = data[0].IdUser;
+        $.ajax({
+          type: "GET",
+          url: '/validate_login',
+          data:{
+            'usrss': usrss,
+            'usrid': usrid,
+          },
+          dataType: 'json',
+          success: function (data){
+            if(data.is_success){
+              location.reload(true);
+            } else {
+              alert('Log in failed!')
+              location.reload(true);
+            }
+          }
+        });
       } else {
         $('#loginalert').html("Incorrect username or password!");
       }
@@ -34,7 +52,7 @@ $('#logout_btn').click(function() {
       if(data.is_success){
         window.location.replace('http://127.0.0.1:8000/');
       } else {
-        alert('log out failed!')
+        alert('Log out failed!')
         location.reload(true);
       }
     }
@@ -91,11 +109,17 @@ $('#signup_btn').click(function(){
     },
     dataType: 'json',
     success: function (data){
-      alert(data);
+      alert("Success! You can log in now.")
+      location.reload(true);
     },
     error: function (xhr, status) {
-      alert("error");
+      alert("Can't sign up!");
+      location.reload(true);
     }
   });
 
+});
+
+$('#alreadyexpert').click(function(){
+  alert('You are an expert already!')
 });
