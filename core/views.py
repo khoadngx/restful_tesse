@@ -20,14 +20,14 @@ def home(request):
         'currentusr': currentusr,
         })
 
-def search(request):
+def search(request, key):
     usrid = ''
     usersession = ''
     currentusr = {}
     if request.session.get('usrid'):
         usrid = request.session.get('usrid')
         usersession = request.session.get('user')
-    response = requests.get('http://192.168.43.242:3000/tesse/expert')
+    response = requests.get('http://192.168.43.242:3000/tesse/search/' + key)
     expdata = response.json()
     jsdata = []
     expskill = []
@@ -76,6 +76,33 @@ def manageAppointment(request):
     usrid = ''
     usersession = ''
     currentusr = {}
+    appointList = []
+    if request.session.get('usrid'):
+        usrid = request.session.get('usrid')
+        usersession = request.session.get('user')
+    response = requests.get('http://192.168.43.242:3000/tesse/users/all')
+    usrdata = response.json()
+    for i in range(len(usrdata)):
+        if str(usrdata[i]['IdUser']) == str(usrid):
+            currentusr = usrdata[i]
+    response = requests.get('http://192.168.43.242:3000/tesse/appointmentuser/' + usrid)
+    appointmentusrdata = response.json()
+    for i in range(len(appointmentusrdata)):
+        appointList.append(appointmentusrdata[i]['id'])
+    return render(request, 'manageappointment.html', { 
+        'usersession': usersession, 
+        'appointnum': len(appointmentusrdata),
+        'usrid': usrid,
+        'currentusr': currentusr,
+        'appointmentusrdata': appointmentusrdata,
+        'appointList': appointList,
+        })
+
+def manageExpertAppointment(request):
+    usrid = ''
+    usersession = ''
+    currentusr = {}
+    appointList = []
     if request.session.get('usrid'):
         usrid = request.session.get('usrid')
         usersession = request.session.get('user')
@@ -86,11 +113,15 @@ def manageAppointment(request):
             currentusr = usrdata[i]
     response = requests.get('http://192.168.43.242:3000/tesse/appointmentexpert/' + usrid)
     appointmentusrdata = response.json()
-    return render(request, 'manageappointment.html', { 
+    for i in range(len(appointmentusrdata)):
+        appointList.append(appointmentusrdata[i]['id'])
+    return render(request, 'manageexpertappointment.html', { 
         'usersession': usersession, 
+        'appointnum': len(appointmentusrdata),
         'usrid': usrid,
         'currentusr': currentusr,
         'appointmentusrdata': appointmentusrdata,
+        'appointList': appointList,
         })
 
 def validate_login(request):

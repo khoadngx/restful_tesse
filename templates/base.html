@@ -44,10 +44,12 @@
           </li>
           <li class="nav-item">
             <div class="input-group" style="width:750px;">
+              {% block btnsearch %}
               <input type="search" class="form-control" placeholder="What are you looking for?" aria-label="Search" aria-describedby="search-input">
               <div class="input-group-append">
-                <a class="btn btn-warning" href="http://127.0.0.1:8000/search" aria-pressed="true"><i class="fas fa-search"></i></a>
+                  <button type="submit" class="btn btn-warning" aria-pressed="true"><i class="fas fa-search"></i></button>
               </div>
+              {% endblock %}
             </div>
           </li>
           {% block becomeexpert %}
@@ -64,9 +66,8 @@
           <div class="dropdown-menu dropdown-menu-right">
             <button class="dropdown-item" type="submit">My profile</button>
             <button class="dropdown-item" type="submit">Become expert</button>
-            <button class="dropdown-item" type="submit">Manage appoinment</button>
-            <button class="dropdown-item" type="submit">Setting account</button>
-            <button class="dropdown-item" type="submit" id="logout_btn">Log out</button>
+            <a class="btn dropdown-item" type="subimt" href="http://127.0.0.1:8000/manage-appointment">Manage request</a>
+            <a class="btn dropdown-item" type="subimt" href="http://127.0.0.1:8000/manage-expert-appointment">Manage appointment</a>
           </div>
         </div>
     </nav>

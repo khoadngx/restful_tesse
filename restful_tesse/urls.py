@@ -20,9 +20,10 @@ from core import views
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('search/', views.search, name='search'),
+    path('search/<str:key>', views.search, name='search'),
     path('become-an-expert', views.becomeAnExpert, name='becomeAnExpert'),
     path('manage-appointment', views.manageAppointment, name='manageAppointment'),
+    path('manage-expert-appointment', views.manageExpertAppointment, name='manageExpertAppointment'),
     path('validate_login', views.validate_login, name='validate_login'),
     path('validate_email', views.validate_email, name='validate_email'),
     path('logout', views.logout, name='logout'),

@@ -2,6 +2,15 @@ $(function() {
     $('#appointmentdatetime').datepicker();
 });
 
+$('#search_btn').click(function(){
+  var keyword = $('#search_keyword').val().trim();
+  if(keyword != ''){
+    window.location.replace('http://127.0.0.1:8000/search/' + keyword);
+  } else {
+    alert('Please type in a keyword!')
+  }
+});
+
 $('#logout_btn').click(function() {
   $.ajax({
     type: "GET",
@@ -46,7 +55,7 @@ function appointment(expid, usrid) {
     dataType: 'json',
     success: function (data){
       if(data){
-        alert(data);
+        location.reload(true);
       } else {
         alert('Log out failed!');
       }

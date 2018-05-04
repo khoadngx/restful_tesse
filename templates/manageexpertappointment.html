@@ -9,7 +9,7 @@
 
 {% block content %}
     
-    <h6 class="mt-sm-4" style="color:slategray;">Your request</h6>
+    <h6 class="mt-sm-4" style="color:slategray;">Your appointment</h6>
     <hr>
     <div class="row">
         {% for appoint in appointmentusrdata %}
@@ -50,6 +50,16 @@
                                 <button class="btn btn-outline-dark btn-sm" type="button" data-toggle="modal" data-target="#appointLocation{{appoint.id}}"><i class="fas fa-map-marker-alt"> Location</i></button>
                             </div>
                         </div>
+                        {% ifequal appoint.isAccepted 2 %}
+                            <div class="action-wrap row mt-2">
+                                <div class="col-6">
+                                    <button class="btn btn-success btn-block" onclick="confirmAppoint('{{ appoint.id }}', 1);">Accept</button>
+                                </div>
+                                <div class="col-6">
+                                    <button class="btn btn-danger btn-block" onclick="confirmAppoint('{{ appoint.id }}', 0);">Deny</button>
+                                </div>
+                            </div>
+                        {% endifequal %}
                     </div>
                 </div>
             </div>
@@ -77,7 +87,7 @@
 
 {% endblock %}
 {% block customjs %}
-    <script src="{% static 'js/manageappointment.js' %}"></script> 
+    <script src="{% static 'js/manageexpertappointment.js' %}"></script> 
     <!-- Map JS -->
     <script>
         function initMap() {

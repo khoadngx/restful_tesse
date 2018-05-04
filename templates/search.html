@@ -6,8 +6,15 @@
   <link href="{% static 'css/search.css' %}" rel="stylesheet"/>
 {% endblock %}
 
+{% block btnsearch %}
+  <input type="search" class="form-control" placeholder="What are you looking for?" aria-label="Search" aria-describedby="search-input" id="search_keyword"
+  <div class="input-group-append">
+    <button type="submit" class="btn btn-warning" aria-pressed="true" id="search_btn"><i class="fas fa-search"></i></button>
+  </div>
+{% endblock %}
+
 {% block becomeexpert %}
-  {% ifequal currentusr.isExpert '0' %}
+  {% ifequal currentusr.isExpert 0 %}
     <li class="nav-item">
       <a class="btn btn-warning mx-sm-2" href="http://127.0.0.1:8000/become-an-expert" aria-pressed="true">Become An Expert</a>
     </li>
@@ -73,11 +80,7 @@
                 </div>
               </div>
               <div class="skills mt-sm-4 float-right">
-                {% for exp in expskill %}
-                  {% for skill in exp %}
-                    <span class="btn badge" style="background-color:#EEEEEE;">{{ skill.name }}</span>
-                  {% endfor %}
-                {% endfor %}
+                <button type="button" class="btn badge" style="background-color:#EEEEEE;">Skills</button>
               </div>
             </div>
           </div>

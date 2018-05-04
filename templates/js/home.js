@@ -59,6 +59,15 @@ $('#logout_btn').click(function() {
   });
 });
 
+$('#search_btn').click(function(){
+  var keyword = $('#search_keyword').val().trim();
+  if(keyword != ''){
+    window.location.replace('http://127.0.0.1:8000/search/' + keyword);
+  } else {
+    alert('Please type in a keyword!')
+  }
+});
+
 $('#avasl').change(function avaSelection(){
   var avasl = this.value;
   $('#avaSelect').attr("src", avasl);

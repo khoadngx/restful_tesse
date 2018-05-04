@@ -67,10 +67,6 @@
             {{ usersession }}
           </button>
           <div class="dropdown-menu dropdown-menu-right">
-            <button class="dropdown-item" type="submit">My profile</button>
-            <button class="dropdown-item" type="submit">Become expert</button>
-            <button class="dropdown-item" type="submit">Manage appoinment</button>
-            <button class="dropdown-item" type="submit">Setting account</button>
             <button class="dropdown-item" type="submit" id="logout_btn">Log out</button>
           </div>
         </div>
@@ -85,9 +81,9 @@
             <h4>Search for global experts</h4>
           </div>
           <div class="input-group input-group-lg mt-sm-4">
-            <input type="search" class="form-control" placeholder="What are you looking for?" aria-label="Search" aria-describedby="search-input">
+            <input type="text" class="form-control" placeholder="What are you looking for?" aria-label="Search" aria-describedby="search-input" id="search_keyword" required>
             <div class="input-group-append">
-              <a class="btn btn-warning" href="http://127.0.0.1:8000/search" aria-pressed="true"><i class="fas fa-search"></i> Search</a>
+              <button type="submit" class="btn btn-warning" aria-pressed="true" id="search_btn"><i class="fas fa-search"></i> Search</button>
             </div>
           </div>
         </div>
